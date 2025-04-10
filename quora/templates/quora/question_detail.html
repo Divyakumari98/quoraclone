@@ -1,0 +1,20 @@
+<h2>{{ question.title }}</h2>
+<p>{{ question.body }}</p>
+<p>Asked by {{ question.author }}</p>
+
+<h3>Answers</h3>
+{% for answer in answers %}
+  <p>{{ answer.body }} - {{ answer.author }}</p>
+  <p>Likes: {{ answer.like_count }}</p>
+  <a href="{% url 'like_answer' answer.id %}">Like</a>
+{% endfor %}
+
+{% if user.is_authenticated %}
+<h4>Your Answer</h4>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Post Answer</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> to post an answer</p>
+{% endif %}
